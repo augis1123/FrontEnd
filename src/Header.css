@@ -1,0 +1,51 @@
+.usernamecolor{
+    color: lightgray;
+}
+
+.usernamecolor:hover{
+    text-decoration: underline;
+    color: gray;
+}
+
+.dropdown-toggle::after{
+    color: lightgray;
+}
+
+
+
+.nav-link{
+    color: lightgray;
+}
+
+.nav-link:hover{
+    text-decoration: underline;
+    color: gray;
+}
+
+.nav-link:focus{
+    text-decoration: underline;
+    color: gray;
+}
+
+.link{
+    text-decoration: none;
+    color:lightgray;
+}
+
+.link:hover{
+    text-decoration: underline;
+    color: gray;
+}
+
+.logo{
+    text-decoration: none;
+    color:lightgray;
+}
+
+.logo:hover{
+    color:lightgray;
+}
+
+.filter-lightgray{
+    filter: invert(94%) sepia(0%) saturate(15%) hue-rotate(135deg) brightness(91%) contrast(93%);
+}
