@@ -20,18 +20,18 @@ export default function AddSeller() {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
     const [count, setCount] = useState(0);
-    let countryid = JSON.parse(JSON.stringify(id))
-    console.log(countryid)
-    async function addBet(e) {
+    let yesid = JSON.parse(JSON.stringify(id))
+    console.log(yesid)
+    async function addItem(e) {
         e.preventDefault();
 
 
         let details = { name,description, price, count }
         let json = JSON.stringify(details);
 
-        await axios.post('http://localhost:5232/api/sellers/' + countryid + '/items' , json, { headers: { 'Content-Type': 'application/json' } })
+        await axios.post('http://localhost:5232/api/sellers/' + yesid + '/items' , json, { headers: { 'Content-Type': 'application/json' } })
             .then(response => {
-                navigate("/ItemsList/" + countryid)
+                navigate("/ItemsList/" + yesid)
             })
             .catch(error => {
                 //setErrorMessage(error.response.data);
@@ -47,7 +47,7 @@ export default function AddSeller() {
                 <div className="col-sm-6 offset-sm-3">
                     <h2>Prideti preke</h2>
                     <br />
-                    <Form onSubmit={addBet}>
+                    <Form onSubmit={addItem}>
                         <fieldset>
                             <input type="text"  value={name} onChange={(e) => setName(e.target.value)} className="form-control" placeholder="Pavadinimas prekes" required />
                             <br />
@@ -60,7 +60,7 @@ export default function AddSeller() {
                             <input type="number" id="Kiekis" min={0}  value={count} onChange={(e) => setCount(e.target.value)} className="form-control" placeholder="Kiekis" required />
                             <br />
                             <button id="submit" value="submit" className="btn btn-success">Sukurti</button>
-                            <Link to={"/ItemsList/"+countryid} ><Button variant='danger' className='my-1 m-1'>Grižti</Button></Link>
+                            <Link to={"/ItemsList/"+yesid} ><Button variant='danger' className='my-1 m-1'>Grižti</Button></Link>
                         </fieldset>
                     </Form>
 

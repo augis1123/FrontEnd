@@ -11,51 +11,51 @@ export default function ItemsList() {
     axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem("access-token");
     const [data, setData] = useState([]);
     const { id } = useParams();
-    const [country, setCountry] = useState([]);
+    const [sellers, setsellers] = useState([]);
     let userId = localStorage.getItem("id");
     const navigate = useNavigate()
 
 
-    let countryid = JSON.parse(JSON.stringify(id))
-    console.log(countryid)
+    let sellersId = JSON.parse(JSON.stringify(id))
+    console.log(sellersId)
     let userRoles = localStorage.getItem("roles");
     console.log("yeeeet: ",id)
-    console.log("noooooo: ", countryid)
+    console.log("noooooo: ", sellersId)
     if(userRoles === null)
     {
         userRoles = "Svečias";
     }
 
     useEffect(() => {
-        fetchCountry(countryid);
-        fetchCars(countryid);
-    }, [countryid])
+        fetchsellers(sellersId);
+        fetchitemss(sellersId);
+    }, [sellersId])
 
-    console.log(country.userId)
+    console.log(sellers.userId)
     console.log(data)
-    async function fetchCars(countryid) {
-        let result = await axios.get('http://localhost:5232/api/sellers/' + countryid + '/items')
-        console.log(countryid)
+    async function fetchitemss(sellersId) {
+        let result = await axios.get('http://localhost:5232/api/sellers/' + sellersId + '/items')
+        console.log(sellersId)
         setData(JSON.parse(JSON.stringify(result.data)));
     }
 
-    async function fetchCountry(countryid) {
-        let result = await axios.get('http://localhost:5232/api/sellers/' + countryid)
-        //console.log(countryid)
-        setCountry(JSON.parse(JSON.stringify(result.data)));
+    async function fetchsellers(sellersId) {
+        let result = await axios.get('http://localhost:5232/api/sellers/' + sellersId)
+        //console.log(sellersId)
+        setsellers(JSON.parse(JSON.stringify(result.data)));
     }
 
-    async function deleteItem(carid, countryid) {
-        let url = 'http://localhost:5232/api/sellers/' + countryid + "/items/" + carid;
+    async function deleteItem(itemsid, sellersId) {
+        let url = 'http://localhost:5232/api/sellers/' + sellersId + "/items/" + itemsid;
         await axios.delete(url)
         .then(response => {
-            navigate("/ItemsList/" + countryid)
+            navigate("/ItemsList/" + sellersId)
         })
             .catch(error => {
                 console.error('There was an error!', error);
-                navigate("/ItemsList/" + countryid)
+                navigate("/ItemsList/" + sellersId)
             });
-            fetchCars(countryid)
+            fetchitemss(sellersId)
     }
 
     return (
@@ -63,14 +63,14 @@ export default function ItemsList() {
             <Header />
             <Container>
                 <br />
-                <h2 style={{ textAlign: "center" }}>{country.name} prekės</h2>
+                <h2 style={{ textAlign: "center" }}>{sellers.name} prekės</h2>
                 <br />
                 <div className="col-sm-6 offset-sm-3">
                     <div className='float-end'>
                         {
-                            userRoles.includes("Seller") && userId === country.userId ?
+                            userRoles.includes("Seller") && userId === sellers.userId ?
                                 <>
-                                    <Link to={"/AddItem/" + countryid} ><Button variant='success' size='sm' className='my-1'>Pridėti prekę</Button></Link>
+                                    <Link to={"/AddItem/" + sellersId} ><Button variant='success' size='sm' className='my-1'>Pridėti prekę</Button></Link>
                                 </>
                                 :
                                 <>
@@ -121,9 +121,9 @@ export default function ItemsList() {
                             userRoles.includes("Seller") ?
                                 <>
                                 {
-                                    userId === country.userId ?
+                                    userId === sellers.userId ?
                                     <>
-                                    <td><Link to={"/UpdateItems/" + countryid + "/" + item.id} ><Button variant='success' size='sm' className='my-1'>Atnaujinti</Button></Link></td>
+                                    <td><Link to={"/UpdateItems/" + sellersId + "/" + item.id} ><Button variant='success' size='sm' className='my-1'>Atnaujinti</Button></Link></td>
                                     </>
                                     :
                                     <>
@@ -141,9 +141,9 @@ export default function ItemsList() {
                             userRoles.includes("Seller") ?
                                 <>
                                     {
-                                        userId === country.userId?
+                                        userId === sellers.userId?
                                         <>
-                                        <td><Button variant="danger" size="sm" onClick={() => deleteItem(item.id, countryid)}>Pašalinti</Button></td>
+                                        <td><Button variant="danger" size="sm" onClick={() => deleteItem(item.id, sellersId)}>Pašalinti</Button></td>
                                         </>
                                         :
                                         <>

@@ -243,30 +243,6 @@ export default function Header() {
                                 <label htmlFor='password'>Slaptažodis:</label>
                                 <input type="password" id='password' value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" placeholder="Password" required />
                                 <br />
-                                {/* <Form.Label as="legend" className='text-center'>
-                                    Account type
-                                </Form.Label>
-                                <div key={'inline-radio'} className="mb-3 text-center">
-                                    <Form.Check
-                                        inline
-                                        type="radio"
-                                        label="Buyer"
-                                        name="buyer"
-                                        id="buyer"
-                                        value="Buyer"
-                                        defaultChecked
-                                        onChange={(e) => setType(e.target.value)}
-                                    />
-                                    <Form.Check
-                                        inline
-                                        type="radio"
-                                        label="Seller"
-                                        name="buyer"
-                                        id="seller"
-                                        value="Seller"
-                                        onChange={(e) => setType(e.target.value)}
-                                    />
-                                </div> */}
                             </fieldset>
                         </Form>
                     </Modal.Body>

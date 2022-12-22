@@ -12,10 +12,8 @@ export default function AddBills() {
     axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem("access-token");
 
     const { id, id2 } = useParams();
-    const [betting_price, setBetting_Price] = useState(0);
     const navigate = useNavigate()
-    const [lastbet, setLastBet] = useState(0);
-    const [car, setCar] = useState();
+
 
     const [city, setCity] = useState("");
     const [address, setAddress] = useState("");
@@ -25,52 +23,9 @@ export default function AddBills() {
     let countryid = JSON.parse(JSON.stringify(id))
     let carid = JSON.parse(JSON.stringify(id2))
 
-    useEffect(() => {
-        fetchCar(countryid, carid);
-    }, [countryid, carid])
-
-    useMemo(()=>{
-        if(car !== undefined)
-        {
-            fetchBet(countryid, carid,car);
-        }
-        
-    }, [countryid, carid, car])
-
-    async function fetchCar(countryid, carid) {
-        let result = await axios.get('http://localhost:5232/api/sellers/' + countryid + '/items/' + carid)
-        let resultjson = JSON.parse(JSON.stringify(result.data))
-        setCar(resultjson);
-    }
-
-    async function fetchBet(countryid, carid, car) {
-        let result = await axios.get('http://localhost:5232/api/sellers/' + countryid + '/items/' + carid + '/bills')
-        let resultjson = await JSON.parse(JSON.stringify(result.data))
-        if(resultjson.length > 0)
-        {
-            await setLastBet(resultjson[resultjson.length-1].betting_price+1);
-            await setBetting_Price(resultjson[resultjson.length-1].betting_price+1)
-        }else{
-            await setLastBet(car.starting_price+1)
-            await setBetting_Price(car.starting_price+1)
-        }
-        
-    }
-
-    if(lastbet === undefined)
-    {
-        return <></>
-    }
-
-    if(car === undefined)
-    {
-        return <></>
-    }
 
     async function addBet(e) {
         e.preventDefault();
-
-        console.log(betting_price)
 
         let details = { city, address, buyerName, buyerSecondName }
         let json = JSON.stringify(details);

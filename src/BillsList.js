@@ -11,46 +11,46 @@ export default function BillsList() {
     const { id, id2 } = useParams();
 
     const [data, setData] = useState([]);
-    const [car, setCar] = useState([]);
+    const [items, setItems] = useState([]);
     axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem("access-token");
     let userRoles = localStorage.getItem("roles");
     if(userRoles === null)
     {
         userRoles = "Svečias";
     }
-    let countryid = JSON.parse(JSON.stringify(id))
-    let carid = JSON.parse(JSON.stringify(id2))
+    let sellersId = JSON.parse(JSON.stringify(id))
+    let itemsId = JSON.parse(JSON.stringify(id2))
 
     useEffect(() => {
-        fecthItems(countryid, carid);
-        fecthBills(countryid, carid);
-    }, [countryid, carid])
+        fecthItems(sellersId, itemsId);
+        fecthBills(sellersId, itemsId);
+    }, [sellersId, itemsId])
 
-    async function fecthBills(countryid, carid) {
-        let result = await axios.get('http://localhost:5232/api/sellers/' + countryid + '/items/' + carid + '/bills')
+    async function fecthBills(sellersId, itemsId) {
+        let result = await axios.get('http://localhost:5232/api/sellers/' + sellersId + '/items/' + itemsId + '/bills')
         setData(JSON.parse(JSON.stringify(result.data)));
     }
 
-    async function fecthItems(countryid, carid) {
-        let result = await axios.get('http://localhost:5232/api/sellers/' + countryid + '/items/' + carid)
-        setCar(JSON.parse(JSON.stringify(result.data)));
+    async function fecthItems(sellersId, itemsId) {
+        let result = await axios.get('http://localhost:5232/api/sellers/' + sellersId + '/items/' + itemsId)
+        setItems(JSON.parse(JSON.stringify(result.data)));
     }
 
-    if (car === undefined) {
+    if (items === undefined) {
         return <></>
     }
 
-    async function deleteItem(carid, countryid, billid) {
-        let url = 'http://localhost:5232/api/sellers/' + countryid + "/items/" + carid + "/bills/"+ billid;
+    async function deleteItem(itemsId, sellersId, billid) {
+        let url = 'http://localhost:5232/api/sellers/' + sellersId + "/items/" + itemsId + "/bills/"+ billid;
         await axios.delete(url)
         .then(response => {
-            navigate("/ItemsList/" + countryid)
+            navigate("/ItemsList/" + sellersId)
         })
             .catch(error => {
                 console.error('There was an error!', error);
-                navigate("/ItemsList/" + countryid)
+                navigate("/ItemsList/" + sellersId)
             });
-            fecthBills(countryid, carid)
+            fecthBills(sellersId, itemsId)
     }
 
 
@@ -66,14 +66,14 @@ export default function BillsList() {
                         {
                             userRoles.includes("User") ?
                                 <>
-                                    <Link to={"/AddBills/" + countryid + '/' + carid} ><Button variant='success' size='sm' className='my-1'>Prideti saskaita</Button></Link>
+                                    <Link to={"/AddBills/" + sellersId + '/' + itemsId} ><Button variant='success' size='sm' className='my-1'>Prideti saskaita</Button></Link>
 
                                 </>
                                 :
                                 <>
                                 </>
                         }
-                        <Link to={"/ItemsList/" + countryid} ><Button variant='danger' size='sm' className='my-1 m-1'>Atgal i prekes</Button></Link>
+                        <Link to={"/ItemsList/" + sellersId} ><Button variant='danger' size='sm' className='my-1 m-1'>Atgal i prekes</Button></Link>
                     </div>
                     <Table striped bordered hover variant="dark">
                         <thead>
@@ -109,7 +109,7 @@ export default function BillsList() {
                                         {
                                         userRoles.includes("Admin") ?
                                         <>
-                                        <td><Button variant="danger" size="sm" onClick={() => deleteItem(countryid, carid, item.id)}>Pašalinti</Button></td>
+                                        <td><Button variant="danger" size="sm" onClick={() => deleteItem(sellersId, itemsId, item.id)}>Pašalinti</Button></td>
                                         </>
                                         :
                                         <>
