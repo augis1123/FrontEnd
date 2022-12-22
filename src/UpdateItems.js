@@ -21,15 +21,15 @@ export default function UpdateItems(props) {
     const [count, setCount] = useState(0)
     console.log(data)
     useEffect(() => {
-        fetchCountry(jid, jjid);
+        fetchitems(jid, jjid);
     }, [jid, jjid])
 
-    async function fetchCountry(jid, jjid) {
+    async function fetchitems(jid, jjid) {
         let result = await axios.get('http://localhost:5232/api/sellers/' + jid + "/items/" + jjid)
         setData(JSON.parse(JSON.stringify(result.data)));
     }
 
-    async function updateCountry(e) {
+    async function updateitems(e) {
         e.preventDefault()
 
         let details = {name, description, price, count}
@@ -49,7 +49,7 @@ export default function UpdateItems(props) {
         <div className="App">
             <Header />
             <Container>
-                <Form onSubmit={updateCountry}>
+                <Form onSubmit={updateitems}>
                     <h2>Atnaujinti preke</h2>
                     <br />
                     <div className="col-sm-6 offset-sm-3">

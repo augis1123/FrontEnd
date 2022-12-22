@@ -20,15 +20,15 @@ export default function UpdateSeller(props) {
     const [address, setAddress] = useState([])
 
     useEffect(() => {
-        fetchCountry(jid);
+        fetchsellers(jid);
     }, [jid])
 
-    async function fetchCountry(jid) {
+    async function fetchsellers(jid) {
         let result = await axios.get('http://localhost:5232/api/sellers/' + jid)
         setData(JSON.parse(JSON.stringify(result.data)));
     }
 
-    async function updateCountry(e) {
+    async function updatesellers(e) {
         e.preventDefault()
 
         let details = {name, city, address}
@@ -48,7 +48,7 @@ export default function UpdateSeller(props) {
         <div className="App">
             <Header />
             <Container>
-                <Form onSubmit={updateCountry}>
+                <Form onSubmit={updatesellers}>
                     <h2>Atnaujinti parduotuve</h2>
                     <br />
                     <div className="col-sm-6 offset-sm-3">
