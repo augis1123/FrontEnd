@@ -4,32 +4,32 @@
 
 .usernamecolor:hover{
     text-decoration: underline;
-    color: gray;
+    color: blue;
 }
 
 .dropdown-toggle::after{
-    color: lightgray;
+    color: lightblue;
 }
 
 
 
 .nav-link{
-    color: lightgray;
+    color: lightblue;
 }
 
 .nav-link:hover{
     text-decoration: underline;
-    color: gray;
+    color: blue;
 }
 
 .nav-link:focus{
     text-decoration: underline;
-    color: gray;
+    color: blue;
 }
 
 .link{
     text-decoration: none;
-    color:lightgray;
+    color:lightblue;
 }
 
 .link:hover{
@@ -43,7 +43,7 @@
 }
 
 .logo:hover{
-    color:lightgray;
+    color:blue;
 }
 
 .filter-lightgray{

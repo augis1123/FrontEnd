@@ -142,22 +142,7 @@ export default function Header() {
                                     <>
                                         <Nav className="">
                                         </Nav>
-                                        {
-                                            userRoles.includes("Admin") ?
-                                                <>
-                                                    <NavDropdown
-                                                        className="link"
-                                                        menuVariant='dark'
-                                                        title={<span className="usernamecolor">Admin panel</span>}>
-                                                        <NavDropdown.Item><Link to='/CountryList' className='link'>Pirkėjų sąrašas</Link></NavDropdown.Item>
-                                                        <NavDropdown.Divider />
-                                                        <NavDropdown.Item><Link to='/CarList' className='link'>PrekiŲ Sarašas</Link></NavDropdown.Item>
-                                                    </NavDropdown>
-                                                </>
-                                                :
-                                                <>
-                                                </>
-                                        }
+                                       
 
 
                                     </>

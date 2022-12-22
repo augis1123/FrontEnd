@@ -5,34 +5,33 @@ import { Table, Container, Button } from 'react-bootstrap'
 import axios from 'axios'
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
-
+import { useNavigate } from 'react-router-dom'
 export default function BillsList() {
-
+    const navigate = useNavigate()
     const { id, id2 } = useParams();
+
     const [data, setData] = useState([]);
     const [car, setCar] = useState([]);
     axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem("access-token");
-    console.log( localStorage.getItem("access-token"));
     let userRoles = localStorage.getItem("roles");
     if(userRoles === null)
     {
         userRoles = "Svečias";
     }
-    console.log(data)
     let countryid = JSON.parse(JSON.stringify(id))
     let carid = JSON.parse(JSON.stringify(id2))
 
     useEffect(() => {
-        fetchCar(countryid, carid);
-        fetchBets(countryid, carid);
+        fecthItems(countryid, carid);
+        fecthBills(countryid, carid);
     }, [countryid, carid])
 
-    async function fetchBets(countryid, carid) {
+    async function fecthBills(countryid, carid) {
         let result = await axios.get('http://localhost:5232/api/sellers/' + countryid + '/items/' + carid + '/bills')
         setData(JSON.parse(JSON.stringify(result.data)));
     }
 
-    async function fetchCar(countryid, carid) {
+    async function fecthItems(countryid, carid) {
         let result = await axios.get('http://localhost:5232/api/sellers/' + countryid + '/items/' + carid)
         setCar(JSON.parse(JSON.stringify(result.data)));
     }
@@ -40,6 +39,20 @@ export default function BillsList() {
     if (car === undefined) {
         return <></>
     }
+
+    async function deleteItem(carid, countryid, billid) {
+        let url = 'http://localhost:5232/api/sellers/' + countryid + "/items/" + carid + "/bills/"+ billid;
+        await axios.delete(url)
+        .then(response => {
+            navigate("/ItemsList/" + countryid)
+        })
+            .catch(error => {
+                console.error('There was an error!', error);
+                navigate("/ItemsList/" + countryid)
+            });
+            fecthBills(countryid, carid)
+    }
+
 
     return (
         <div>
@@ -71,6 +84,15 @@ export default function BillsList() {
                                 <th>Miestas</th>
                                 <th>Adresas</th>
                                 <th>Data</th>
+                                {
+                                        userRoles.includes("Admin") ?
+                                        <>
+                                        <td>Admin teises</td>
+                                        </>
+                                        :
+                                        <>
+                                        </>
+                                    }
                             </tr>
                         </thead>
                         <tbody>
@@ -83,6 +105,16 @@ export default function BillsList() {
                                         <td>{item.city}</td>
                                         <td>{item.address}</td>
                                         <td>{item.dateTime}</td>
+
+                                        {
+                                        userRoles.includes("Admin") ?
+                                        <>
+                                        <td><Button variant="danger" size="sm" onClick={() => deleteItem(countryid, carid, item.id)}>Pašalinti</Button></td>
+                                        </>
+                                        :
+                                        <>
+                                        </>
+                                    }
                                     </tr>
                                 )
                             }

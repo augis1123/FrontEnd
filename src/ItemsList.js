@@ -143,7 +143,7 @@ export default function ItemsList() {
                                     {
                                         userId === country.userId?
                                         <>
-                                        <td><Button variant="danger" size="sm" onClick={() => deleteItem(item.id, countryid)}>Delete</Button></td>
+                                        <td><Button variant="danger" size="sm" onClick={() => deleteItem(item.id, countryid)}>Pašalinti</Button></td>
                                         </>
                                         :
                                         <>

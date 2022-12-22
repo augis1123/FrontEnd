@@ -12,7 +12,7 @@ export default function AddSeller() {
     axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem("access-token");
 
     const { id, id2 } = useParams();
-    const [betting_price, setBetting_Price] = useState(0);
+
     const navigate = useNavigate()
 
 
@@ -25,7 +25,6 @@ export default function AddSeller() {
     async function addBet(e) {
         e.preventDefault();
 
-        console.log(betting_price)
 
         let details = { name,description, price, count }
         let json = JSON.stringify(details);
@@ -46,7 +45,7 @@ export default function AddSeller() {
             <Container>
                 <br />
                 <div className="col-sm-6 offset-sm-3">
-                    <h2>Prideti parduotuve</h2>
+                    <h2>Prideti preke</h2>
                     <br />
                     <Form onSubmit={addBet}>
                         <fieldset>

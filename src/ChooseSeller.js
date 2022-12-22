@@ -5,7 +5,6 @@ import axios from 'axios'
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
 import { useNavigate } from 'react-router-dom'
-import { ThemeConsumer } from 'react-bootstrap/esm/ThemeProvider';
 
 export default function ChooseSellers() {
     axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem("access-token");
@@ -15,10 +14,10 @@ export default function ChooseSellers() {
     console.log(userId)
     const navigate = useNavigate()
     useEffect(() => {
-        fetchCountrys();
+        fecthSellers();
     }, [])
 
-    async function fetchCountrys() {
+    async function fecthSellers() {
         let result = await axios.get('http://localhost:5232/api/sellers')
         setCountrys(JSON.parse(JSON.stringify(result.data)));
         console.log(countrys[1])
@@ -34,7 +33,7 @@ export default function ChooseSellers() {
                 console.error('There was an error!', error);
                 navigate("/ChooseSellers")
             });
-            fetchCountrys()
+            fecthSellers()
     }
 
     return (
@@ -56,11 +55,15 @@ export default function ChooseSellers() {
                         }
                         
                     </div>
+                    <br></br>
+                    <br></br>
                 <div className="col-sm-6 offset-sm-3">
                     <Table striped bordered hover variant="dark">
                         <thead>
                             <tr>
                                 <th>Pardavėjai</th>
+                                <th>Miestas</th>
+                                <th>Adresas</th>
 
                         {
                             userRoles.includes("Seller") ?
@@ -80,6 +83,8 @@ export default function ChooseSellers() {
                                 countrys.map((item) =>
                                     <tr>
                                         <td><Link to={"/ItemsList/"+item.id} className='link'>{item.name}</Link></td>
+                                        <td>{item.city}</td>
+                                        <td>{item.address}</td>
 
                         {
                             userRoles.includes("Seller") ?
@@ -107,7 +112,7 @@ export default function ChooseSellers() {
                                     {
                                         userId === item.userId ?
                                         <>
-                                        <td><Button variant="danger" size="sm" onClick={() => deleteSeller(item.id)}>Delete</Button></td>
+                                        <td><Button variant="danger" size="sm" onClick={() => deleteSeller(item.id)}>Pašalinti</Button></td>
                                         </>
                                         :
                                         <>

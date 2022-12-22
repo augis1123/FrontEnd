@@ -12,19 +12,14 @@ export default function AddSeller() {
     axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem("access-token");
 
     const { id, id2 } = useParams();
-    const [betting_price, setBetting_Price] = useState(0);
     const navigate = useNavigate()
-    const [lastbet, setLastBet] = useState(0);
-    const [car, setCar] = useState();
 
     const [city, setCity] = useState("");
     const [address, setAddress] = useState("");
     const [name, setname] = useState("");
-    const [buyerSecondName, setBuyerSecondName] = useState("");
-    async function addBet(e) {
-        e.preventDefault();
 
-        console.log(betting_price)
+    async function fecthseller(e) {
+        e.preventDefault();
 
         let details = { city, name, address }
         let json = JSON.stringify(details);
@@ -47,7 +42,7 @@ export default function AddSeller() {
                 <div className="col-sm-6 offset-sm-3">
                     <h2>Prideti parduotuve</h2>
                     <br />
-                    <Form onSubmit={addBet}>
+                    <Form onSubmit={fecthseller}>
                         <fieldset>
                             <input type="text"  value={city} onChange={(e) => setCity(e.target.value)} className="form-control" placeholder="Miestas" required />
                             <br />
