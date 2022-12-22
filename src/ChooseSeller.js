@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 export default function ChooseSellers() {
     axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem("access-token");
     let userRoles = localStorage.getItem("roles");
-    const [countrys, setCountrys] = useState([]);
+    const [sellers, setsellers] = useState([]);
     let userId = localStorage.getItem("id");
     console.log(userId)
     const navigate = useNavigate()
@@ -19,8 +19,8 @@ export default function ChooseSellers() {
 
     async function fecthSellers() {
         let result = await axios.get('http://localhost:5232/api/sellers')
-        setCountrys(JSON.parse(JSON.stringify(result.data)));
-        console.log(countrys[1])
+        setsellers(JSON.parse(JSON.stringify(result.data)));
+        console.log(sellers[1])
     }
 
     async function deleteSeller(carid) {
@@ -80,7 +80,7 @@ export default function ChooseSellers() {
                         </thead>
                         <tbody>
                             {
-                                countrys.map((item) =>
+                                sellers.map((item) =>
                                     <tr>
                                         <td><Link to={"/ItemsList/"+item.id} className='link'>{item.name}</Link></td>
                                         <td>{item.city}</td>
